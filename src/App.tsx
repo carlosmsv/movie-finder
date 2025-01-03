@@ -56,32 +56,51 @@ function App() {
 
   return (
     <>
-      <h1 className='title'>Movie Finder</h1>
-      <div>
+      <h1>Movie Finder</h1>
+      <div className='search-section'>
         <input
+          className='search-input'
           type='string'
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
-        <button onClick={() => handleSearch(query)}>SEARCH</button>
+        <button
+          className='search-button'
+          type='button'
+          onClick={() => handleSearch(query)}
+        >
+          SEARCH
+        </button>
       </div>
       {isLoading && <p>Loading...</p>}
       {!isLoading && (
         <>
-          <div>
+          <div className='movies-container'>
             {moviesList.map((movie) => (
-              <div>
-                <img src={movie.Poster} />
-                <span>{movie.Title}</span>
-                <span>{movie.Year}</span>
+              <div key={movie.imdbId} className='movie-card'>
+                {movie.Poster === 'N/A' ? (
+                  <span className='no-poster-found'>No Poster found</span>
+                ) : (
+                  <img
+                    className='movie-img'
+                    src={movie.Poster}
+                    alt={movie.Title}
+                  />
+                )}
+                <span className='movie-title'>{movie.Title}</span>
+                <span className='movie-year'>{movie.Year}</span>
               </div>
             ))}
           </div>
 
-          <div>
+          <div className='pages-selector'>
             {Array.from({ length: pages }, (_, index) => index + 1).map(
               (pageNumber) => (
-                <button onClick={() => handleSearch(query, pageNumber)}>
+                <button
+                  className='page-button'
+                  key={pageNumber}
+                  onClick={() => handleSearch(query, pageNumber)}
+                >
                   {pageNumber}
                 </button>
               )
