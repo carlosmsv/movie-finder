@@ -148,3 +148,25 @@ body {
   cursor: not-allowed;
   color: #fff;
 }
+
+@media (max-width: 768px) {
+  .movies-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .movie-card {
+    height: 200px;
+  }
+  .movie-img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 5px;
+  }
+  .no-poster-found {
+    height: 250px;
+  }
+  .pages-selector {
+    flex-wrap: wrap;
+  }
+}

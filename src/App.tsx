@@ -75,7 +75,7 @@ function App() {
       {isLoading && <p>Loading...</p>}
       {!isLoading && (
         <>
-          <div className='movies-container'>
+          <div className='movies-container' key='movies-container'>
             {moviesList.map((movie) => (
               <div key={movie.imdbId} className='movie-card'>
                 {movie.Poster === 'N/A' ? (
@@ -93,12 +93,12 @@ function App() {
             ))}
           </div>
 
-          <div className='pages-selector'>
+          <div className='pages-selector' key='pages-selector'>
             {Array.from({ length: pages }, (_, index) => index + 1).map(
               (pageNumber) => (
                 <button
-                  className='page-button'
                   key={pageNumber}
+                  className='page-button'
                   onClick={() => handleSearch(query, pageNumber)}
                 >
                   {pageNumber}
