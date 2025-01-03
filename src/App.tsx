@@ -16,9 +16,11 @@ function App() {
   const [moviesList, setMoviesList] = useState<Movie[]>([])
   const [query, setQuery] = useState<string>('')
   const [pages, setPages] = useState<number>(0)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const fetchMovies = async (query: string, page: number) => {
     try {
+      setIsLoading(true)
       const response = await fetch(
         `${BASE_API_URL}?s=${query}&apikey=${API_KEY}&page=${page}`
       )
@@ -39,6 +41,8 @@ function App() {
       alert(`Error fetching movies list: ${error}`)
       setMoviesList([])
       setPages(0)
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -61,24 +65,30 @@ function App() {
         />
         <button onClick={() => handleSearch(query)}>SEARCH</button>
       </div>
-      <div>
-        {moviesList.map((movie) => (
+      {isLoading && <p>Loading...</p>}
+      {!isLoading && (
+        <>
           <div>
-            <img src={movie.Poster} />
-            <span>{movie.Title}</span>
-            <span>{movie.Year}</span>
+            {moviesList.map((movie) => (
+              <div>
+                <img src={movie.Poster} />
+                <span>{movie.Title}</span>
+                <span>{movie.Year}</span>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-      <div>
-        {Array.from({ length: pages }, (_, index) => index + 1).map(
-          (pageNumber) => (
-            <button onClick={() => handleSearch(query, pageNumber)}>
-              {pageNumber}
-            </button>
-          )
-        )}
-      </div>
+
+          <div>
+            {Array.from({ length: pages }, (_, index) => index + 1).map(
+              (pageNumber) => (
+                <button onClick={() => handleSearch(query, pageNumber)}>
+                  {pageNumber}
+                </button>
+              )
+            )}
+          </div>
+        </>
+      )}
     </>
   )
 }
