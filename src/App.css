@@ -163,9 +163,6 @@ body {
     object-position: center;
     border-radius: 5px;
   }
-  .no-poster-found {
-    height: 250px;
-  }
   .pages-selector {
     flex-wrap: wrap;
   }
